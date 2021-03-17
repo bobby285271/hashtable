@@ -48,6 +48,21 @@ void ht_del_hash_table(ht_hash_table *ht)
     free(ht);
 }
 
+// a generic string hashing function
+// 1. converts the string to a large integer
+// 2. reduces the size of the integer to a fixed range by taking its remainder mod m
+static int ht_hash(const char *s, const int a, const int m)
+{
+    long hash = 0;
+    const int len_s = strlen(s);
+    for (int i = 0; i < len_s; i++)
+    {
+        hash += (long)pow(a, len_s - (i + 1)) * s[i];
+        hash = hash % m;
+    }
+    return (int)hash;
+}
+
 int main()
 {
     ht_hash_table *ht = ht_new();
