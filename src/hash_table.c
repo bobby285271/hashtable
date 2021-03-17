@@ -4,6 +4,9 @@
 #include <string.h>
 #include <math.h>
 
+#define HT_PRIME_1 998244353
+#define HT_PRIME_2 1000000007
+
 #include "hash_table.h"
 
 // initialisation function for ht_item
@@ -62,6 +65,14 @@ static int ht_hash(const char *s, const int a, const int m)
         hash = hash % m;
     }
     return (int)hash;
+}
+
+// handle collisions using open addressing
+static int ht_get_hash(const char *s, const int num_buckets, const int attempt)
+{
+    const int hash_a = ht_hash(s, HT_PRIME_1, num_buckets);
+    const int hash_b = ht_hash(s, HT_PRIME_2, num_buckets);
+    return (hash_a + (attempt * (hash_b + 1))) % num_buckets;
 }
 
 int main()
