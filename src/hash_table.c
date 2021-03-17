@@ -19,7 +19,7 @@ static ht_item *ht_new_item(const char *k, const char *v)
 ht_hash_table *ht_new()
 {
     ht_hash_table *ht = malloc(sizeof(ht_hash_table));
-    ht->size = 52; // TODO: resizing
+    ht->size = 53; // TODO: resizing
     ht->count = 0;
     ht->items = calloc((size_t)ht->size, sizeof(ht_item *));
     return ht;
