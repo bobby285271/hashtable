@@ -84,8 +84,18 @@ void ht_insert(ht_hash_table *ht, const char *key, const char *value)
     ht_item *cur_item = ht->items[index];
     int i = 1;
     // iterate through indexes until we find an empty bucket
-    while (cur_item != NULL && cur_item != &HT_DELETED_ITEM)
+    while (cur_item != NULL)
     {
+        // delete the previous item and insert the new item at its location
+        if (cur_item != &HT_DELETED_ITEM)
+        {
+            if (strcmp(cur_item->key, key) == 0)
+            {
+                ht_del_item(cur_item);
+                ht->items[index] = item;
+                return;
+            }
+        }
         index = ht_get_hash(item->key, ht->size, i);
         cur_item = ht->items[index];
         i++;
